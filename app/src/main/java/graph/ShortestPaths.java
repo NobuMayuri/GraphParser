@@ -10,6 +10,7 @@ import java.io.FileNotFoundException;
 import java.util.Set;
 import java.util.Iterator;
 import java.util.HashSet;
+import java.util.Collections;
 
 
 /** Provides an implementation of Dijkstra's single-source shortest paths
@@ -88,7 +89,7 @@ public class ShortestPaths {
             joe.add(paths.get(destination).previous);
             destination = paths.get(destination).previous;
         }
-        joe.add(destination);
+        Collections.reverse(joe);
         return joe;
     }
 
