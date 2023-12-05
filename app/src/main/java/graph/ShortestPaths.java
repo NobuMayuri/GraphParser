@@ -7,6 +7,10 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Set;
+import java.util.Iterator;
+import java.util.HashSet;
+
 
 /** Provides an implementation of Dijkstra's single-source shortest paths
  * algorithm.
@@ -23,7 +27,6 @@ public class ShortestPaths {
     // stores auxiliary data associated with each node for the shortest
     // paths computation:
     private HashMap<Node, PathData> paths;
-
     /**
      * Compute the shortest path to all nodes from origin using Dijkstra's algorithm. Fill in the paths field, which
      * associates each Node with its PathData record, storing total distance from the source, and the backpointer to the
@@ -31,9 +34,32 @@ public class ShortestPaths {
      */
     public void compute(Node origin) {
         paths = new HashMap<Node, PathData>();
+        Set<Node> seen = new HashSet<Node>();
+        Heap unProcessed = new Heap();
+        PathData og = new PathData(0, null);
+        seen.add(origin);
+        unProcessed.add(origin,paths.get(origin).distance);
+        while (unProcessed.size() != 0){
+            Node current = ((Node)unProcessed.peek());
+            for (Node neighbor : current.getNeighbors().keySet()){
+                double neighborDistance = paths.get(neighbor).distance;
+                double currentDistance = paths.get(current).distance;
+                if (seen.contains(neighbor)){
+                    // seeing j for the first time, add path details
+                     neighborDistance = neighborDistance + current.getNeighbors().get(neighbor);
+                     paths.get(neighbor).previous = current;
+                     seen.add(neighbor);
+                     unProcessed.add(neighbor,neighborDistance);
+                } else {
+                    // we have seen j before then, check if  the path is shorter.
+                    //if(){
+                    //
+                    //}
+                }
 
-        // TODO 1: implement Dijkstra's algorithm to fill paths with
-        // shortest-path data for each Node reachable from origin.
+            }
+            unProcessed.poll();
+        }
 
     }
 
