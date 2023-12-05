@@ -38,23 +38,25 @@ public class ShortestPaths {
         Heap unProcessed = new Heap();
         PathData og = new PathData(0, null);
         seen.add(origin);
-        unProcessed.add(origin,paths.get(origin).distance);
+        unProcessed.add(origin,0);
+        paths.put(origin,og);
         while (unProcessed.size() != 0){
             Node current = ((Node)unProcessed.peek());
             for (Node neighbor : current.getNeighbors().keySet()){
-                double neighborDistance = paths.get(neighbor).distance;
-                double currentDistance = paths.get(current).distance;
-                if (seen.contains(neighbor)){
+                if (!seen.contains(neighbor)){
                     // seeing j for the first time, add path details
-                     neighborDistance = neighborDistance + current.getNeighbors().get(neighbor);
+                     PathData neighborData = new PathData(paths.get(current).distance+current.getNeighbors().get(neighbor), current);
+                     paths.put(neighbor,neighborData);
                      paths.get(neighbor).previous = current;
                      seen.add(neighbor);
-                     unProcessed.add(neighbor,neighborDistance);
+                     unProcessed.add(neighbor,(int)paths.get(neighbor).distance);
                 } else {
                     // we have seen j before then, check if  the path is shorter.
-                    //if(){
-                    //
-                    //}
+                        if(paths.get(current).distance + current.getNeighbors().get(neighbor) < paths.get(neighbor).distance){
+                            System.out.println("inside");
+                        paths.get(neighbor).distance = paths.get(current).distance + current.getNeighbors().get(neighbor);
+                        paths.get(neighbor).previous = current;
+                    }
                 }
 
             }
@@ -68,9 +70,7 @@ public class ShortestPaths {
      * Double.POSITIVE_INFINITY. Precondition: destination is a node in the graph, and compute(origin) has been called.
      */
     public double shortestPathLength(Node destination) {
-        // TODO 2 - implement this method to fetch the shortest path length
-        // from the paths data computed by Dijkstra's algorithm.
-        throw new UnsupportedOperationException();
+        return paths.get(destination).distance;
     }
 
     /**
@@ -82,7 +82,14 @@ public class ShortestPaths {
         // TODO 3 - implement this method to reconstruct sequence of Nodes
         // along the shortest path from the origin to destination using the
         // paths data computed by Dijkstra's algorithm.
-        throw new UnsupportedOperationException();
+        LinkedList<Node> joe = new LinkedList<Node>();
+        joe.add(destination);
+        while(paths.get(destination).previous != null){
+            joe.add(paths.get(destination).previous);
+            destination = paths.get(destination).previous;
+        }
+        joe.add(destination);
+        return joe;
     }
 
 

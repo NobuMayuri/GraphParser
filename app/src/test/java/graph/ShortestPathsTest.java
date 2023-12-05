@@ -44,7 +44,8 @@ public class ShortestPathsTest {
         Node a = g.getNode("A");
         Node b = g.getNode("B");
         g.addEdge(a, b, 1);
-
+        ShortestPaths sp = new ShortestPaths();
+        sp.compute(a);
         // sample assertion statements:
         assertTrue(true);
         assertEquals(2+2, 4);
