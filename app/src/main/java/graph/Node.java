@@ -2,11 +2,14 @@
 
 import java.util.HashMap;
 
-/**
- * A Node class for a adjacency-list representation of a graph.  Nodes are identified by a unique String identifier and
+/* Author: Kieran Rapo
+ * Date: 12/06/2023
+ * Description: A Node class for a adjacency-list representation of a graph.  Nodes are identified by a unique String identifier and
  * edges are stored as a Neighbor map that associates each neighboring node with the weight of the edge to that node. It
  * is the responsibility of the user of this class to avoid making multiple Nodes with the same unique identifier.
  */
+
+
 public class Node {
 
     private final String id; // unique identifier for this node

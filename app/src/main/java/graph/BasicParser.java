@@ -4,8 +4,9 @@ import java.util.HashMap;
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
-
-/** Basic parser for flight information. Parses a text file with flight
+/* Author: Kieran Rapo
+ * Date: 12/06/2023
+ * Description: Basic parser for flight information. Parses a text file with flight
  * information; each line must contain:
  *  ORIG DEST DISTANCE
  * separated by a single space. ORIG and DEST are parsed as Strings, and

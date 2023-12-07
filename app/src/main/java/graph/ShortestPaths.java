@@ -1,7 +1,12 @@
 package graph;
 
-import heap.Heap;
+ /* Author: Kieran Rapo
+ * Date: 12/06/2023
+ * Description: This class implemets Dijkstra's Algorithm. Can calculate all the shortest paths from an origin node, the shortest path to a destination node
+ * As well, can provide a linked list of all nodes on that pathway to a destination node.
+ * Class also contains the main method. */
 
+import heap.Heap;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -54,7 +59,6 @@ public class ShortestPaths {
                 } else {
                     // we have seen j before then, check if  the path is shorter.
                         if(paths.get(current).distance + current.getNeighbors().get(neighbor) < paths.get(neighbor).distance){
-                            System.out.println("inside");
                         paths.get(neighbor).distance = paths.get(current).distance + current.getNeighbors().get(neighbor);
                         paths.get(neighbor).previous = current;
                     }
@@ -71,9 +75,14 @@ public class ShortestPaths {
      * Double.POSITIVE_INFINITY. Precondition: destination is a node in the graph, and compute(origin) has been called.
      */
     public double shortestPathLength(Node destination) {
+        if (paths.get(destination) == null)
+            return Double.POSITIVE_INFINITY;
         return paths.get(destination).distance;
     }
 
+    public HashMap<Node, PathData> getPaths(){
+        return paths;
+    }
     /**
      * Returns a LinkedList of the nodes along the shortest path from origin to destination. This path includes the
      * origin and destination. If origin and destination are the same node, it is included only once. If no path to it
@@ -157,17 +166,29 @@ public class ShortestPaths {
         }
         graph.report();
 
+        ShortestPaths sp = new ShortestPaths();
+        Node origNode = graph.getNode(origCode);
+        sp.compute(origNode);
+        HashMap<Node, PathData> mapping = sp.getPaths();
+        if (destCode == null){
+            System.out.println("Shortest Paths from A:");
+                for (Node current : mapping.keySet()){
+                    System.out.println(current.getId() + ": " + mapping.get(current).distance);
+                }
+        }
+        else{
+            Node destNode = graph.getNode(destCode);
+                if (sp.shortestPathLength(destNode) != Double.POSITIVE_INFINITY){
+                    LinkedList<Node> bob = sp.shortestPath(destNode);
+                        for(Node runner : bob){
+                            System.out.print(runner.getId() + " ");
+                        }
+                    System.out.println(sp.shortestPathLength(destNode));
+                }
+                else{
+                    System.out.println("No Path Exists");
+                }
+        }
 
-        // TODO 4: create a ShortestPaths object, use it to compute shortest
-        // paths data from the origin node given by origCode.
-
-        // TODO 5:
-        // If destCode was not given, print each reachable node followed by the
-        // length of the shortest path to it from the origin.
-
-        // TODO 6:
-        // If destCode was given, print the nodes in the path from
-        // origCode to destCode, followed by the total path length
-        // If no path exists, print a message saying so.
     }
 }

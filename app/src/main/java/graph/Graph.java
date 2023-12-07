@@ -3,11 +3,13 @@ package graph;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Collections;
-
-/** A graph class representing a graph in adjacency-list style format. The
+ /* Author: Kieran Rapo
+ * Date: 12/06/2023
+ * Description: A graph class representing a graph in adjacency-list style format. The
  * Graph stores a mapping from unique String node identifiers to respective
  * Node objects. Edges are stored in each Node's neighbors, accessible by its
  * getNeighbors field. */
+
 public class Graph {
 
     // maps node ids to nodes:

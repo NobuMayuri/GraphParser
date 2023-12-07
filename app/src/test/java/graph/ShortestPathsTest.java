@@ -1,5 +1,9 @@
 package graph;
 
+ /* Author: Kieran Rapo
+ * Date: 12/06/2023
+ * Description: Test Cases for ShortestPath and associated methods */
+
 import static org.junit.Assert.*;
 import org.junit.FixMethodOrder;
 
@@ -65,6 +69,36 @@ public class ShortestPathsTest {
         assertEquals(abPath.getFirst(), a);
         assertEquals(abPath.getLast(),  b);
         assertEquals(sp.shortestPathLength(b), 1.0, 1e-6);
+    }
+
+    @Test
+    public void test02Simple1() {
+        Graph g = loadBasicGraph("Simple1.txt");
+        g.report();
+        ShortestPaths sp = new ShortestPaths();
+        Node a = g.getNode("A");
+        sp.compute(a);
+        Node s = g.getNode("S");
+        LinkedList<Node> asPath = sp.shortestPath(s);
+        assertEquals(asPath.size(), 4);
+        assertEquals(asPath.getFirst(), a);
+        assertEquals(asPath.getLast(),  s);
+        assertEquals(sp.shortestPathLength(s), 5.0, 1e-6);
+    }
+
+    @Test
+    public void test03Simple2() {
+        Graph g = loadBasicGraph("Simple2.txt");
+        g.report();
+        ShortestPaths sp = new ShortestPaths();
+        Node a = g.getNode("A");
+        sp.compute(a);
+        Node i = g.getNode("I");
+        LinkedList<Node> aiPath = sp.shortestPath(i);
+        assertEquals(aiPath.size(), 4);
+        assertEquals(aiPath.getFirst(), a);
+        assertEquals(aiPath.getLast(),  i);
+        assertEquals(sp.shortestPathLength(i), 5.0, 1e-6);
     }
 
     /* Pro tip: unless you include @Test on the line above your method header,
