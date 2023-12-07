@@ -70,7 +70,7 @@ public class ShortestPathsTest {
         assertEquals(abPath.getLast(),  b);
         assertEquals(sp.shortestPathLength(b), 1.0, 1e-6);
     }
-
+    /** Test case to go from path A to S in Simple1.txt */
     @Test
     public void test02Simple1() {
         Graph g = loadBasicGraph("Simple1.txt");
@@ -85,7 +85,7 @@ public class ShortestPathsTest {
         assertEquals(asPath.getLast(),  s);
         assertEquals(sp.shortestPathLength(s), 5.0, 1e-6);
     }
-
+    /** Test case to run through A to I in Simple2.txt, as well it tests the shortest path part */
     @Test
     public void test03Simple2() {
         Graph g = loadBasicGraph("Simple2.txt");

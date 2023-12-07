@@ -39,6 +39,7 @@ public class ShortestPaths {
      * previous node on the shortest path. Precondition: origin is a node in the Graph.
      */
     public void compute(Node origin) {
+        // sets up paths, seen, unprocessed for the algorithm.
         paths = new HashMap<Node, PathData>();
         Set<Node> seen = new HashSet<Node>();
         Heap unProcessed = new Heap();
@@ -46,6 +47,7 @@ public class ShortestPaths {
         seen.add(origin);
         unProcessed.add(origin,0);
         paths.put(origin,og);
+        // while there are still unprocessed nodes, run through each checking every neighbour and comparing them.
         while (unProcessed.size() != 0){
             Node current = ((Node)unProcessed.peek());
             for (Node neighbor : current.getNeighbors().keySet()){
@@ -65,6 +67,7 @@ public class ShortestPaths {
                 }
 
             }
+            // remove the processed node.
             unProcessed.poll();
         }
 
@@ -79,10 +82,13 @@ public class ShortestPaths {
             return Double.POSITIVE_INFINITY;
         return paths.get(destination).distance;
     }
-
+    /*
+    * Returns paths, used in main for going through every node
+    */
     public HashMap<Node, PathData> getPaths(){
         return paths;
     }
+
     /**
      * Returns a LinkedList of the nodes along the shortest path from origin to destination. This path includes the
      * origin and destination. If origin and destination are the same node, it is included only once. If no path to it
