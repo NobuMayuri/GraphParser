@@ -83,7 +83,7 @@ public class ShortestPaths {
         return paths.get(destination).distance;
     }
     /*
-    * Returns paths, used in main for going through every node
+    * Returns paths due to it being private, used in main for going through every node
     */
     public HashMap<Node, PathData> getPaths(){
         return paths;
@@ -171,20 +171,22 @@ public class ShortestPaths {
             return;
         }
         graph.report();
-
+        // sets up the shortestpaths object and does Dijkastra's algo on them.
         ShortestPaths sp = new ShortestPaths();
         Node origNode = graph.getNode(origCode);
         sp.compute(origNode);
-        HashMap<Node, PathData> mapping = sp.getPaths();
+        HashMap<Node, PathData> mapping = sp.getPaths(); // importing path data from sp.
+        // if no destination, run through each node available.
         if (destCode == null){
             System.out.println("Shortest Paths from A:");
                 for (Node current : mapping.keySet()){
                     System.out.println(current.getId() + ": " + mapping.get(current).distance);
                 }
         }
+        // otherwise, run through to the destination or tells you there is no paths if there is none.
         else{
             Node destNode = graph.getNode(destCode);
-                if (sp.shortestPathLength(destNode) != Double.POSITIVE_INFINITY){
+                if (sp.shortestPathLength(destNode) != Double.POSITIVE_INFINITY){ // checks if there is a connection.
                     LinkedList<Node> bob = sp.shortestPath(destNode);
                         for(Node runner : bob){
                             System.out.print(runner.getId() + " ");
