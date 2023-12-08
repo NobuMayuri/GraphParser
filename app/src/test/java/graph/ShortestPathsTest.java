@@ -85,6 +85,7 @@ public class ShortestPathsTest {
         assertEquals(asPath.getLast(),  s);
         assertEquals(sp.shortestPathLength(s), 5.0, 1e-6);
     }
+
     /** Test case to run through A to I in Simple2.txt, as well it tests the shortest path part */
     @Test
     public void test03Simple2() {
@@ -100,6 +101,84 @@ public class ShortestPathsTest {
         assertEquals(aiPath.getLast(),  i);
         assertEquals(sp.shortestPathLength(i), 5.0, 1e-6);
     }
+
+    /** Test case to check a non-path due to the directed nature of the graph */
+    @Test
+    public void test04NoPathDirection() {
+        Graph g = loadBasicGraph("Simple0.txt");
+        g.report();
+        ShortestPaths sp = new ShortestPaths();
+        Node b = g.getNode("B");
+        sp.compute(b);
+        Node a = g.getNode("A");
+        LinkedList<Node> baPath = sp.shortestPath(a);
+        assertEquals(baPath, null);
+        assertEquals(sp.shortestPathLength(a), Double.POSITIVE_INFINITY, 1e-6);
+    }
+
+    /** Test case to check a destination of the origin point.*/
+    @Test
+    public void test05OriginEater() {
+        Graph g = loadBasicGraph("Simple0.txt");
+        g.report();
+        ShortestPaths sp = new ShortestPaths();
+        Node a = g.getNode("A");
+        sp.compute(a);
+        LinkedList<Node> abPath = sp.shortestPath(a);
+        assertEquals(abPath.size(), 1);
+        assertEquals(abPath.getFirst(), a);
+        assertEquals(abPath.getLast(), a);
+        assertEquals(sp.shortestPathLength(a), 0.0, 1e-6);
+    }
+
+    /** Test case to check a new Simple3.txt file */
+    @Test
+    public void test06Simple3() {
+        Graph g = loadBasicGraph("Simple3.txt");
+        g.report();
+        ShortestPaths sp = new ShortestPaths();
+        Node a = g.getNode("A");
+        sp.compute(a);
+        Node e = g.getNode("E");
+        LinkedList<Node> aePath = sp.shortestPath(e);
+        assertEquals(aePath.size(), 5);
+        assertEquals(aePath.getFirst(),a);
+        assertEquals(aePath.getLast(), e);
+        assertEquals(sp.shortestPathLength(e), 10.0, 1e-6);
+
+    }
+
+    /** Test case to check Nodes in different components. */
+    @Test
+    public void test07DifferentComponents() {
+        Graph g = loadBasicGraph("Simple3.txt");
+        g.report();
+        ShortestPaths sp = new ShortestPaths();
+        Node a = g.getNode("A");
+        sp.compute(a);
+        Node y = g.getNode("Y");
+        LinkedList<Node> ayPath = sp.shortestPath(y);
+        assertEquals(ayPath, null);
+        assertEquals(sp.shortestPathLength(y), Double.POSITIVE_INFINITY, 1e-6);
+    }
+
+    /** Test case to go through the FakeCanada.txt file */
+    @Test 
+    public void test08FakeCanada() {
+        Graph g = loadBasicGraph("FakeCanada.txt");
+        g.report();
+        ShortestPaths sp = new ShortestPaths();
+        Node montreal = g.getNode("YUL");
+        sp.compute(montreal);
+        Node vancouver = g.getNode("YVR");
+        LinkedList<Node> mvPath = sp.shortestPath(vancouver);
+        assertEquals(mvPath.size(), 5);
+        assertEquals(mvPath.getFirst(), montreal);
+        assertEquals(mvPath.getLast(), vancouver);
+        assertEquals(sp.shortestPathLength(vancouver), 2423.0, 1e-6);
+    }
+
+
 
     /* Pro tip: unless you include @Test on the line above your method header,
      * gradle test will not run it! This gets me every time. */

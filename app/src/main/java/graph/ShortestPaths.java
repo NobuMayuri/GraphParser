@@ -99,6 +99,8 @@ public class ShortestPaths {
         // along the shortest path from the origin to destination using the
         // paths data computed by Dijkstra's algorithm.
         LinkedList<Node> joe = new LinkedList<Node>();
+        if (shortestPathLength(destination) == Double.POSITIVE_INFINITY)
+            return null;
         joe.add(destination);
         while(paths.get(destination).previous != null){
             joe.add(paths.get(destination).previous);
